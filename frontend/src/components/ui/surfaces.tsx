@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { cn } from "@/lib/cn";
 
 export function Card({ className, children }: { className?: string; children: React.ReactNode }): React.JSX.Element {
@@ -8,7 +10,7 @@ export function Card({ className, children }: { className?: string; children: Re
 
 export function Avatar({ name, src, className }: { name: string; src?: string | null; className?: string }): React.JSX.Element {
   return src ? (
-    <img alt={name} className={cn("h-10 w-10 rounded-full object-cover", className)} src={src} />
+    <Image alt={name} className={cn("h-10 w-10 rounded-full object-cover", className)} height={40} width={40} src={src} />
   ) : (
     <div className={cn("flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground", className)}>{name.slice(0, 1).toUpperCase()}</div>
   );

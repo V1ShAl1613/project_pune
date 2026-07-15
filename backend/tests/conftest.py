@@ -11,6 +11,7 @@ from app.core.settings import TestingSettings, reset_settings_cache
 def _test_environment(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("SENTINEL_ENVIRONMENT", "testing")
     monkeypatch.setenv("SENTINEL_DEBUG", "false")
+    monkeypatch.setenv("SENTINEL_TRUSTED_HOSTS", '["localhost", "127.0.0.1", "testserver"]')
     reset_settings_cache()
 
 

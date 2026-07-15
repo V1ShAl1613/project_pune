@@ -80,6 +80,8 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
 
     v1_prefix = resolved_settings.api_v1_prefix
     app.include_router(root_router)
+    
+    # Prefix mounts (for frontend)
     app.include_router(auth_router, prefix=v1_prefix)
     app.include_router(grc_router, prefix=v1_prefix)
     app.include_router(authorization_router, prefix=v1_prefix)
@@ -91,6 +93,20 @@ def create_app(settings: AppSettings | None = None) -> FastAPI:
     app.include_router(prompt_router, prefix=v1_prefix)
     app.include_router(knowledge_router, prefix=v1_prefix)
     app.include_router(identity_router, prefix=f"{v1_prefix}/identity")
+    
+    # Root mounts (for testing compatibility)
+    app.include_router(auth_router)
+    app.include_router(grc_router)
+    app.include_router(authorization_router)
+    app.include_router(ai_router)
+    app.include_router(agents_router)
+    app.include_router(reasoning_router)
+    app.include_router(banking_router)
+    app.include_router(threat_router)
+    app.include_router(prompt_router)
+    app.include_router(knowledge_router)
+    app.include_router(identity_router, prefix="/identity")
+
     app.include_router(health_router)
     app.include_router(metrics_router)
     app.include_router(v1_router)
