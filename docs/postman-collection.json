@@ -1,0 +1,29 @@
+{
+  "info": {
+    "name": "Sentinel Fusion AI API",
+    "description": "Minimal Postman collection for health and executive intelligence endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Executive Overview",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/executive/overview"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    }
+  ]
+}

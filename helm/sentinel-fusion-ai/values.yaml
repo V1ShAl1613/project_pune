@@ -1,0 +1,46 @@
+global:
+  imagePullPolicy: IfNotPresent
+  namespace: sentinel-fusion-ai
+
+backend:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/sentinel-fusion-ai/backend
+    tag: "1.0.0"
+  service:
+    port: 8000
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+frontend:
+  replicaCount: 2
+  image:
+    repository: ghcr.io/sentinel-fusion-ai/frontend
+    tag: "1.0.0"
+  service:
+    port: 3000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+ingress:
+  enabled: true
+  className: nginx
+  host: sentinel-fusion-ai.example.com
+  tls:
+    enabled: true
+    secretName: sentinel-fusion-ai-tls
+
+runtime:
+  apiBaseUrl: https://sentinel-fusion-ai.example.com
+  environment: production
+  debug: "false"

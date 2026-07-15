@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: 246 248 252;
+  --panel: 255 255 255;
+  --text: 15 23 42;
+  --muted: 100 116 139;
+  --line: 226 232 240;
+  --primary: 11 68 88;
+  --primary-foreground: 255 255 255;
+  --secondary: 226 232 240;
+  --secondary-foreground: 15 23 42;
+  --accent: 37 99 235;
+  --accent-foreground: 255 255 255;
+  --danger: 185 28 28;
+  --danger-foreground: 255 255 255;
+  --success: 5 150 105;
+  --warning: 180 83 9;
+}
+
+:root[data-theme="dark"] {
+  --canvas: 2 6 23;
+  --panel: 15 23 42;
+  --text: 226 232 240;
+  --muted: 148 163 184;
+  --line: 51 65 85;
+  --primary: 38 99 235;
+  --primary-foreground: 255 255 255;
+  --secondary: 30 41 59;
+  --secondary-foreground: 226 232 240;
+  --accent: 59 130 246;
+  --accent-foreground: 255 255 255;
+  --danger: 248 113 113;
+  --danger-foreground: 15 23 42;
+  --success: 52 211 153;
+  --warning: 251 191 36;
+}
+
+html {
+  background: rgb(var(--canvas));
+  color: rgb(var(--text));
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.12), transparent 26%),
+    radial-gradient(circle at bottom left, rgba(5, 150, 105, 0.1), transparent 26%),
+    rgb(var(--canvas));
+  color: rgb(var(--text));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.2);
+}

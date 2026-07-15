@@ -1,0 +1,12 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "sentinel-fusion-ai.fullname" . }}-backend
+  labels:
+    {{- include "sentinel-fusion-ai.labels" . | nindent 4 }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "sentinel-fusion-ai.name" . }}
+      app.kubernetes.io/component: backend

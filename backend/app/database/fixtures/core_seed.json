@@ -1,0 +1,84 @@
+{
+  "organizations": [
+    {
+      "code": "sentinel-fusion",
+      "name": "Sentinel Fusion AI",
+      "legal_name": "Sentinel Fusion AI",
+      "status": "active",
+      "description": "Primary enterprise organization for platform bootstrap"
+    }
+  ],
+  "departments": [
+    {
+      "organization_code": "sentinel-fusion",
+      "code": "platform",
+      "name": "Platform Engineering",
+      "status": "active"
+    }
+  ],
+  "teams": [
+    {
+      "department_code": "platform",
+      "code": "core-data",
+      "name": "Core Data",
+      "status": "active"
+    }
+  ],
+  "permissions": [
+    {
+      "code": "database.read",
+      "resource": "database",
+      "action": "read",
+      "description": "Read database metadata and health state",
+      "category": "platform"
+    },
+    {
+      "code": "database.manage",
+      "resource": "database",
+      "action": "manage",
+      "description": "Manage persistence infrastructure",
+      "category": "platform"
+    }
+  ],
+  "roles": [
+    {
+      "organization_code": "sentinel-fusion",
+      "code": "platform-admin",
+      "name": "Platform Admin",
+      "description": "Administrative platform role for bootstrap",
+      "status": "active"
+    }
+  ],
+  "role_permissions": [
+    {
+      "role_code": "platform-admin",
+      "permission_code": "database.read"
+    },
+    {
+      "role_code": "platform-admin",
+      "permission_code": "database.manage"
+    }
+  ],
+  "system_settings": [
+    {
+      "setting_key": "platform.timezone",
+      "setting_value": "UTC",
+      "data_type": "string",
+      "description": "Default platform timezone",
+      "is_secret": false,
+      "scope": "global"
+    }
+  ],
+  "feature_flags": [
+    {
+      "flag_key": "database.seed.enabled",
+      "name": "Database Seed Enabled",
+      "description": "Controls whether seed data can be applied",
+      "enabled": true,
+      "rollout_percentage": 100,
+      "conditions": {},
+      "scope": "global",
+      "owner_team": "Core Data"
+    }
+  ]
+}

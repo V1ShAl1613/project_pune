@@ -1,0 +1,28 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-07-15T00:00:00.000Z",
+  "resources": [
+    {
+      "_id": "wrk_sentinel_fusion_ai",
+      "_type": "workspace",
+      "name": "Sentinel Fusion AI"
+    },
+    {
+      "_id": "req_health",
+      "_type": "request",
+      "parentId": "wrk_sentinel_fusion_ai",
+      "name": "Health",
+      "method": "GET",
+      "url": "{{ baseUrl }}/health"
+    },
+    {
+      "_id": "req_executive_overview",
+      "_type": "request",
+      "parentId": "wrk_sentinel_fusion_ai",
+      "name": "Executive Overview",
+      "method": "GET",
+      "url": "{{ baseUrl }}/api/v1/executive/overview"
+    }
+  ]
+}

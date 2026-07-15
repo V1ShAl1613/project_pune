@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sentinel-fusion-ai.fullname" . }}-backend
+  labels:
+    {{- include "sentinel-fusion-ai.labels" . | nindent 4 }}
+    app.kubernetes.io/component: backend
+spec:
+  replicas: {{ .Values.backend.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "sentinel-fusion-ai.name" . }}
+      app.kubernetes.io/component: backend
+  template:
+    metadata:
+      labels:
+        {{- include "sentinel-fusion-ai.labels" . | nindent 8 }}
+        app.kubernetes.io/component: backend
+    spec:
+      serviceAccountName: {{ include "sentinel-fusion-ai.fullname" . }}
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: backend
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.backend.service.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "sentinel-fusion-ai.fullname" . }}-config
+            - secretRef:
+                name: {{ include "sentinel-fusion-ai.fullname" . }}-secret
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.backend.service.port }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.backend.service.port }}
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          resources:
+            {{- toYaml .Values.backend.resources | nindent 12 }}

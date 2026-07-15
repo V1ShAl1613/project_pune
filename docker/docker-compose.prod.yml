@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/backend.Dockerfile
+    environment:
+      SENTINEL_ENVIRONMENT: production
+      SENTINEL_DEBUG: "false"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+    environment:
+      NODE_ENV: production
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
