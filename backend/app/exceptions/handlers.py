@@ -17,11 +17,24 @@ def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(Exception, handle_unexpected_exception)
 
 
+def sanitize_detail(data: object) -> object:
+    if isinstance(data, dict):
+        return {k: sanitize_detail(v) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [sanitize_detail(item) for item in data]
+    elif isinstance(data, Exception):
+        return str(data)
+    elif not isinstance(data, (str, int, float, bool, type(None))):
+        return str(data)
+    return data
+
+
 async def handle_request_validation_error(request: Request, exc: RequestValidationError) -> JSONResponse:
+    logging.getLogger("sentinel.error").error(f"Validation error: {exc.errors()}")
     payload = ErrorResponse(
         error_code="validation_error",
         message="Request validation failed",
-        details={"errors": exc.errors()},
+        details=sanitize_detail({"errors": exc.errors()}),
     )
     return JSONResponse(payload.model_dump(), status_code=status.HTTP_422_UNPROCESSABLE_ENTITY)
 

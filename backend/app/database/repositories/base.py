@@ -53,8 +53,15 @@ class BaseRepository(Generic[EntityT]):
 
     @asynccontextmanager
     async def transaction(self) -> AsyncIterator[AsyncSession]:
-        async with self.session.begin():
-            yield self.session
+        if self.session.in_transaction():
+            async with self.session.begin_nested():
+                yield self.session
+            tx = self.session.get_transaction()
+            if tx is not None and not tx.nested:
+                await self.session.commit()
+        else:
+            async with self.session.begin():
+                yield self.session
 
     async def get_by_id(self, identifier: Any) -> EntityT | None:
         return await self.session.get(self.model, identifier)

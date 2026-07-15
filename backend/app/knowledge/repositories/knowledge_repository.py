@@ -32,8 +32,15 @@ class KnowledgeRepository:
 
     @asynccontextmanager
     async def transaction(self) -> AsyncIterator[AsyncSession]:
-        async with self.session.begin():
-            yield self.session
+        if self.session.in_transaction():
+            async with self.session.begin_nested():
+                yield self.session
+            tx = self.session.get_transaction()
+            if tx is not None and not tx.nested:
+                await self.session.commit()
+        else:
+            async with self.session.begin():
+                yield self.session
 
     async def list_collections(self) -> list[KnowledgeCollection]:
         result = await self.session.execute(select(KnowledgeCollection).where(KnowledgeCollection.deleted_at.is_(None)).order_by(KnowledgeCollection.name))

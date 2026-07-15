@@ -14,7 +14,6 @@ class AuditLog(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, VersionMixin):
     __table_args__ = (
         Index("ix_audit_logs_actor_created_at", "actor_user_id", "created_at"),
         Index("ix_audit_logs_entity", "entity_type", "entity_id"),
-        Index("ix_audit_logs_correlation_id", "correlation_id"),
     )
 
     actor_user_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"), nullable=True)

@@ -69,7 +69,15 @@ class AuthService:
         now = datetime.now(UTC)
         password_hash = self.password_hasher.hash_password(request.password)
         password_expires_at = now + timedelta(days=self.settings.password_expiration_days)
+
+        default_tenant = await self.repository.find_default_tenant()
+        if default_tenant is None:
+            raise BaseApplicationException(
+                "No default tenant configured", status_code=500, error_code="tenant_missing"
+            )
+
         user = User(
+            tenant_id=default_tenant.id,
             email=email,
             username=username,
             display_name=display_name,

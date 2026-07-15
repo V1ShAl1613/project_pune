@@ -14,7 +14,6 @@ export type DashboardSectionKey =
   | "tenants"
   | "workspaces"
   | "threat-center"
-  | "soc-center"
   | "fraud-center"
   | "risk-center"
   | "compliance-center"
@@ -76,7 +75,6 @@ export const dashboardNavigation: DashboardNavigationItem[] = [
   { key: "tenants", label: "Tenants", href: "/tenants", icon: "shield-check", description: "Tenant isolation and health" },
   { key: "workspaces", label: "Workspaces", href: "/workspaces", icon: "building-2", description: "Workspace switching and context" },
   { key: "threat-center", label: "Threat Center", href: "/threat-center", icon: "shield-alert", description: "UI shell only" },
-  { key: "soc-center", label: "SOC Center", href: "/soc-center", icon: "radar", description: "UI shell only" },
   { key: "fraud-center", label: "Fraud Center", href: "/fraud-center", icon: "banknote", description: "UI shell only" },
   { key: "risk-center", label: "Risk Center", href: "/risk-center", icon: "gauge", description: "UI shell only" },
   { key: "compliance-center", label: "Compliance Center", href: "/compliance-center", icon: "shield-check", description: "UI shell only" },

@@ -24,11 +24,11 @@ def upgrade() -> None:
     """Create the full enterprise persistence schema."""
 
     bind = op.get_bind()
-    Base.metadata.create_all(bind=bind)
+    Base.metadata.create_all(bind=bind, checkfirst=True)
 
 
 def downgrade() -> None:
     """Drop the full enterprise persistence schema."""
 
     bind = op.get_bind()
-    Base.metadata.drop_all(bind=bind)
+    Base.metadata.drop_all(bind=bind, checkfirst=True)

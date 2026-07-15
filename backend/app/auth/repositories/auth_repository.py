@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.models import AuditLog
 from app.database.models.identity import RefreshToken, Session as AuthSession, User
+from app.database.models.tenancy import Tenant
 from app.database.repositories.base import CRUDRepository
 
 
@@ -19,8 +20,19 @@ class AuthRepository:
 
     @asynccontextmanager
     async def transaction(self) -> AsyncIterator[AsyncSession]:
-        async with self.session.begin():
-            yield self.session
+        if self.session.in_transaction():
+            async with self.session.begin_nested():
+                yield self.session
+            tx = self.session.get_transaction()
+            if tx is not None and not tx.nested:
+                await self.session.commit()
+        else:
+            async with self.session.begin():
+                yield self.session
+
+    async def find_default_tenant(self) -> Tenant | None:
+        result = await self.session.execute(select(Tenant).where(Tenant.code == "default", Tenant.deleted_at.is_(None)))
+        return result.scalar_one_or_none()
 
     async def find_user_by_identifier(self, identifier: str) -> User | None:
         normalized = identifier.strip().lower()
