@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env.local
+.env.*.local
+
+# Environment secrets (never commit)
+.env
+!.env.example
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+.turbo/
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+
+# Docker
+*.dockerignore
+
+# Compiled binaries
+*.so
+*.dylib
